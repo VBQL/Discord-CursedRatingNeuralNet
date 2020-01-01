@@ -14,29 +14,27 @@ class Net(nn.Module):
         self.conv1 = nn.Conv2d(1, 32, 16)
         self.conv2 = nn.Conv2d(32, 64, 16)
         self.conv3 = nn.Conv2d(64, 128, 16)
-        
+
         x = torch.randn(256,256).view(-1,1,256,256)
         self._to_linear = None
-        
-        self.convs(x)
-        
-        self.fc1 = nn.Linear(self._to_linear, 512)
 
+        self.convs(x)
+
+        self.fc1 = nn.Linear(self._to_linear, 512)
         self.fc2 = nn.Linear(512, 256)
-        
         self.fc3 = nn.Linear(256, 2) 
-    
+
     # Does pyTorch have flatten yet??
     def convs(self, x):
         x = F.max_pool2d(F.relu(self.conv1(x)), (3,3)) # Shape of pooling will be 3 by 3
         x = F.max_pool2d(F.relu(self.conv2(x)), (3,3))
         x = F.max_pool2d(F.relu(self.conv3(x)), (3,3))
-        
+
         if self._to_linear is None:
             self._to_linear = x[0].shape[0] * x[0].shape[1] * x[0].shape[2]
-            
+
         return x
-    
+
     def forward(self,x):
         x = self.convs(x)
         x = x.view(-1, self._to_linear)
@@ -61,7 +59,6 @@ def curseDetermine(link):
     blessed = float(output[1]) * 100
     cursed = float(output[0]) * 100
 
-
     return ("I am **" + np.format_float_positional(cursed, trim='-') + "%** confident that this image is **cursed** and **" + np.format_float_positional(blessed, trim='-') + "%** confident that this image is **blessed**")
 
 class curseNet(discord.Client):
@@ -85,8 +82,6 @@ class curseNet(discord.Client):
                 await message.channel.send(result.format(message))
             except:
                 await message.channel.send('Unable to process image {0.author.mention}'.format(message))
-
-
 
 client = curseNet()
 client.run("[ENTER API]")
