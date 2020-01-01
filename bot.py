@@ -11,24 +11,22 @@ device = torch.device("cuda:0")
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(1, 32, 16) # Input 1, 32 features, 5 kernels to find features
+        self.conv1 = nn.Conv2d(1, 32, 16)
         self.conv2 = nn.Conv2d(32, 64, 16)
         self.conv3 = nn.Conv2d(64, 128, 16)
-        # Convolutional layers needs to go to linear layers eventually
         
-        # We need to pass some fake data to figure out the convnet output neurons
-        x = torch.randn(256,256).view(-1,1,256,256) # Positive 1 is related to the first 1, -1 means whatever feature set amount
+        x = torch.randn(256,256).view(-1,1,256,256)
         self._to_linear = None
         
-        self.convs(x) # Sets self._to_linear
+        self.convs(x)
         
         self.fc1 = nn.Linear(self._to_linear, 512)
 
         self.fc2 = nn.Linear(512, 256)
         
-        self.fc3 = nn.Linear(256, 2) # Output to cursed or blessed
+        self.fc3 = nn.Linear(256, 2) 
     
-    # Calculate output size of the last convolutional layer
+    # Does pyTorch have flatten yet??
     def convs(self, x):
         x = F.max_pool2d(F.relu(self.conv1(x)), (3,3)) # Shape of pooling will be 3 by 3
         x = F.max_pool2d(F.relu(self.conv2(x)), (3,3))
@@ -74,7 +72,7 @@ class curseNet(discord.Client):
         print('------')
 
     async def on_message(self, message):
-        # we do not want the bot to reply to itself
+
         if message.author.id == self.user.id:
             return
 
