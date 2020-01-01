@@ -6,6 +6,8 @@ import numpy as np
 import discord
 import requests
 
+# pyTorch Section
+
 device = torch.device("cuda:0")
 
 class Net(nn.Module):
@@ -45,6 +47,8 @@ class Net(nn.Module):
 
 model = torch.load("model_final_256_256").to(device)
 
+# Blend between pyTorch processing and Discord.py bot code
+
 def curseDetermine(link):
     resp = requests.get(link.strip(), stream=True, headers={'User-agent': 'Mozilla/5.0'}).raw
     img = np.asarray(bytearray(resp.read()), dtype="uint8")
@@ -60,6 +64,8 @@ def curseDetermine(link):
     cursed = float(output[0]) * 100
 
     return ("I am **" + np.format_float_positional(cursed, trim='-') + "%** confident that this image is **cursed** and **" + np.format_float_positional(blessed, trim='-') + "%** confident that this image is **blessed**")
+
+# Discord.py bot code
 
 class curseNet(discord.Client):
     async def on_ready(self):
