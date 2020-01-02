@@ -7,3 +7,5 @@ https://en.wikipedia.org/wiki/Convolutional_neural_network
 Input your API key in the last line of bot.py
 
 The bot assumes you have a Nvidia GPU with cuda cores enabled
+
+Image data is not included because there is just too many to upload to github, be nice to their servers!
