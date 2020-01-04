@@ -12,3 +12,6 @@ Image data is not included because there is just too many to upload to github, b
 
 # Todo
 Add a generative adversarial network to generate cursed/blessed images
+
+# Test it out!
+For now, you can add the bot for testing at https://discordapp.com/api/oauth2/authorize?client_id=505221114687913992&permissions=0&scope=bot
